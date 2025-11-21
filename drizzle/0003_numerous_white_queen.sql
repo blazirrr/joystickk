@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `discordId` varchar(64);
