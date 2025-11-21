@@ -166,3 +166,11 @@
 - [x] Add validation error handling to all forms
 - [x] Display "too short" errors visibly in UI
 - [x] Test validation errors across all features
+
+
+## Remove Manus OAuth (In Progress)
+- [ ] Remove Manus OAuth from backend
+- [ ] Remove Manus environment variables
+- [ ] Implement JWT-based authentication
+- [ ] Create login/register UI
+- [ ] Update .env.local template

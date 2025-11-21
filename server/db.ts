@@ -88,6 +88,50 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
+export async function getUserById(id: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user: database not available");
+    return undefined;
+  }
+
+  const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function updateUserLastSignedIn(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot update user: database not available");
+    return;
+  }
+
+  try {
+    await db.update(users).set({ lastSignedIn: new Date() }).where(eq(users.id, userId));
+  } catch (error) {
+    console.error("[Database] Failed to update user last signed in:", error);
+  }
+}
+
+export async function getUserByEmail(email: string) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get user: database not available");
+    return undefined;
+  }
+
+  const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createUser(user: InsertUser) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(users).values(user);
+  return result;
+}
+
 // Category operations
 export async function getAllCategories() {
   const db = await getDb();
